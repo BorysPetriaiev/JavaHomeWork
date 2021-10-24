@@ -11,20 +11,17 @@ public class Array {
             nums[a] = scan.nextInt();
         }
         System.out.printf("Ваш массив: %s", Arrays.toString(nums));
-        // сумма массива
         int sum = 0;
         for (int l = 0; l < nums.length; l++) {
             sum += nums[l];
         }
         System.out.printf("\nСумма всех элементов массива: %s", sum);
-        // кол-во положительных элементов
         int positive_int = 0;
         for (int b = 0; b < nums.length; b++) {
             if (nums[b] > 0)
                 positive_int++;
         }
         System.out.printf("\nКоличество положительных элементов массива: %s", positive_int);
-        // сортировка пузырьком
         boolean sorted = false;
         int x;
         while (!sorted) {
