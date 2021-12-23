@@ -3,52 +3,61 @@ package com.pb.petriaievB.hw13;
 import java.util.*;
 
 public class Multithreading {
-    public static void main(String[] args) {
-        Object lock = new Object();
-        Queue<Integer> queue = new LinkedList<>();
+    public static Queue<Integer> queue = new PriorityQueue<>();
+    public static void produce () {
         Random r = new Random();
+        while (true) {
+            synchronized (queue) {
+                if (queue.size() != 5) {
+                    int x = r.nextInt(100);
+                    queue.offer(x);
+                    System.out.println("Добавлен элемент " + x);
+                    System.out.println("Размер очереди в producer: " + queue.size());
+                    queue.notify();
+                } else {
+                    try {
+                        queue.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+    public static void consume() {
+        while (true) {
+            synchronized (queue) {
+                if (queue.size() > 0) {
+                    int x = queue.poll();
+                    System.out.println("Изъят элемент " + x);
+                    System.out.println("Размер очереди в consumer: " + queue.size());
+                    queue.notify();
+                } else {
+                    try {
+                        queue.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+    public static void main(String[] args) {
+
 
         Thread producer = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    synchronized (lock) {
-                        if (queue.size() != 5) {
-                            queue.offer(r.nextInt(100));
-                            System.out.printf("Размер очереди в producer: %s\n", queue.size());
-                            lock.notify();
-                        }
-                        else {
-                            try {
-                                lock.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
+                produce();
             }
+
         });
         Thread consumer = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    synchronized (lock) {
-                        if (queue.size() > 0) {
-                            queue.poll();
-                            System.out.printf("Размер очереди в consumer: %s\n", queue.size());
-                            lock.notify();
-                        }
-                        else {
-                            try {
-                                lock.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
+                consume();
             }
+
         });
 
         producer.start();
