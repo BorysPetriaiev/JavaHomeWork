@@ -24,7 +24,7 @@ public class Server {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 String clientMessage;
-                System.out.println("Waiting for messages");
+                System.out.println("Принимаю сообщения");
                 while ((clientMessage = in.readLine()) != null) {
                     if ("exit".equalsIgnoreCase(clientMessage)) {
                         break;
@@ -39,9 +39,9 @@ public class Server {
     }
 
     public static void main(String[] args) throws Exception {
-        int port = 1234;
+        int port = 9999;
         ServerSocket serverSocket = new ServerSocket(port);
-        System.out.println("Server is running");
+        System.out.println("Сервер запущен");
         ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
         while (true) {

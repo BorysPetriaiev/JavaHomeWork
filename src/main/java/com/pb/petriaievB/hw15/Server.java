@@ -39,7 +39,7 @@ public class Server {
     }
 
     public static void main(String[] args) throws Exception {
-        int port = 1234;
+        int port = 9999;
         ServerSocket serverSocket = new ServerSocket(port);
         System.out.println("Server is running");
         ExecutorService threadPool = Executors.newFixedThreadPool(10);

@@ -7,10 +7,10 @@ import java.net.Socket;
 
 public class Client {
     public static void main(String[] args) throws Exception {
-        System.out.println("Client has started.");
+        System.out.println("Клиент стартовал.");
         String serverIp = "127.0.0.1";
-        int serverPort = 1234;
-        System.out.println("Connecting to " + serverIp + ":" + serverPort);
+        int serverPort = 9999;
+        System.out.println("Подключаюсь к " + serverIp + ":" + serverPort);
 
         try (Socket server = new Socket(serverIp, serverPort);
              BufferedReader inServer = new BufferedReader(new InputStreamReader(server.getInputStream()));

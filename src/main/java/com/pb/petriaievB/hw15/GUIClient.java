@@ -12,23 +12,22 @@ public class GUIClient extends JFrame {
     JTextArea server;
     JPanel jPanel;
     JScrollPane jScrollPane;
-    JButton send = new JButton("Send");
+    JButton send = new JButton("Сообщение");
     Container cont;
 
     public GUIClient() {
         cont = getContentPane();
-        setSize(600, 300);
+        setSize(700, 700);
         setTitle("GUIClient");
         jPanel = new JPanel();
         //str = new JTextField(30);
         jPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        client = new JTextArea(10, 10);
-        server = new JTextArea(10, 10);
+        client = new JTextArea(20, 20);
+        server = new JTextArea(20, 20);
         jScrollPane = new JScrollPane(client);
         jPanel.add(client);
         jPanel.add(server);
         jPanel.add(send);
-        //jPanel.add(str);
         cont.add(jPanel);
 
         send.addActionListener(new ActionListener() {
@@ -36,7 +35,7 @@ public class GUIClient extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Socket s = null;
                 try {
-                    s = new Socket("localhost", 1234);
+                    s = new Socket("127.0.0.1", 9999);
                 } catch (UnknownHostException unknownHostException) {
                     unknownHostException.printStackTrace();
                     s = null;
@@ -75,7 +74,6 @@ public class GUIClient extends JFrame {
             @Override
             public void run() {
                 GUIClient guiClient = new GUIClient();
-                guiClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 guiClient.setVisible(true);
             }
         });
